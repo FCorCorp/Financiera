@@ -196,6 +196,15 @@ public class Financiera {
         }
         return clienteEncontrado;
     }
+
+    @Override
+    public String toString() {
+        return "Financiera{" + "clientes=" + clientes + '}';
+    }
+
+    
+    
+    
     
     
 }

@@ -5,7 +5,9 @@
  */
 package Main;
 
+import controlador.CPrincipal;
 import modelo.*;
+import vista.VAcciones;
 
 /**
  *
@@ -52,7 +54,7 @@ public class Principal {
         cuot3Ad.setNumero(1031);
         cuot3Ad.setDescripcion("plan de 3 cuotas con pago adelantado");
         cuot3Ad.setCantCuotas(3);
-        cuot3Ad.setPorcMensual(5);
+        cuot3Ad.setPorcMensual(10);
         cuot3Ad.setPorcAdministrativo(0);
         cuot3Ad.setCuotaAdelantada(true);
         
@@ -60,7 +62,7 @@ public class Principal {
         cuot3Venc.setNumero(1032);
         cuot3Venc.setDescripcion("plan de 3 cuotas con primera cuota vencida");
         cuot3Venc.setCantCuotas(3);
-        cuot3Venc.setPorcMensual(5);
+        cuot3Venc.setPorcMensual(10);
         cuot3Venc.setPorcAdministrativo(2);
         cuot3Venc.setCuotaAdelantada(false);
         
@@ -68,7 +70,7 @@ public class Principal {
         cuot8Ad.setNumero(1081);
         cuot8Ad.setDescripcion("plan de 8 cuotas con pago adelantado");
         cuot8Ad.setCantCuotas(8);
-        cuot8Ad.setPorcMensual(3);
+        cuot8Ad.setPorcMensual(5);
         cuot8Ad.setPorcAdministrativo(0);
         cuot8Ad.setCuotaAdelantada(true);
         
@@ -76,7 +78,7 @@ public class Principal {
         cuot8Venc.setNumero(1082);
         cuot8Venc.setDescripcion("plan de 8 cuotas con primera cuota vencida");
         cuot8Venc.setCantCuotas(8);
-        cuot8Venc.setPorcMensual(3);
+        cuot8Venc.setPorcMensual(5);
         cuot8Venc.setPorcAdministrativo(2);
         cuot8Venc.setCuotaAdelantada(false);
         
@@ -112,9 +114,10 @@ public class Principal {
         financiera.agregarEstado(pendienteFinalizacion);
         financiera.agregarEstado(finalizado);
         
-        
-        
-        
+        VAcciones vista = new VAcciones();
+        CPrincipal principal = new CPrincipal(vista, financiera);
+        principal.iniciar();
+        vista.setVisible(true);
     }
     
 }

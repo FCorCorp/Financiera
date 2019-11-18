@@ -84,6 +84,10 @@ public class Cliente {
         }
         return cuota;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "dni=" + dni + ", nombre=" + nombre + ", domicilio=" + domicilio + ", creditos=" + creditos + '}';
+    }
     
 }
