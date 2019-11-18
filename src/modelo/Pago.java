@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +17,13 @@ public class Pago {
     
     private int numero;
     private String concepto;
-    private DateFormat fecha;
+    private LocalDate fecha;
     private double total;
 
     public Pago() {
     }
 
-    public Pago(int numero, String concepto, DateFormat fecha, double total) {
+    public Pago(int numero, String concepto, LocalDate fecha, double total) {
         this.numero = numero;
         this.concepto = concepto;
         this.fecha = fecha;
@@ -46,11 +46,11 @@ public class Pago {
         this.concepto = concepto;
     }
 
-    public DateFormat getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(DateFormat fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

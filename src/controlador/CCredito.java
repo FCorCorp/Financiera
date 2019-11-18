@@ -15,6 +15,7 @@ import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
 import modelo.Credito;
+import modelo.Estado;
 import modelo.Financiera;
 import modelo.Plan;
 import vista.VSolicitarCredito;
@@ -27,6 +28,16 @@ public class CCredito implements ActionListener {
     private Financiera financiera;
     private Cliente cliente;
     private VSolicitarCredito vistaSolicitarCredito;
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
+    
     
     public CCredito(Financiera financiera, Cliente cliente, VSolicitarCredito vistaSolicitarCredito){
         this.financiera=financiera;
@@ -34,6 +45,7 @@ public class CCredito implements ActionListener {
         this.vistaSolicitarCredito=vistaSolicitarCredito;
         this.vistaSolicitarCredito.comboxPlan.addActionListener(this);
         this.vistaSolicitarCredito.btnCalcular.addActionListener(this);
+        this.vistaSolicitarCredito.btnAceptar.addActionListener(this);
         
         //Cargar planes en la vista
         cargarPlanes();
@@ -43,21 +55,31 @@ public class CCredito implements ActionListener {
     
     public void actionPerformed(ActionEvent e){
         
-        //Cargar Alicuota
+        //Cargar Alicuota cuando se cambie el plan
         if(e.getActionCommand()==vistaSolicitarCredito.comboxPlan.getActionCommand()){
             cargarAlicuota(vistaSolicitarCredito.comboxPlan.getSelectedIndex());
         }
         
-        //Calcular cuotas
+        //Llenar datos de cuotas y resto de campos en pantalla
         if(e.getActionCommand()==vistaSolicitarCredito.btnCalcular.getActionCommand()){
+            
             if(vistaSolicitarCredito.campoImporte!=null){
                 Plan plan = financiera.getPlanes().get(vistaSolicitarCredito.comboxPlan.getSelectedIndex());
                 double importe = Double.parseDouble(vistaSolicitarCredito.campoImporte.getText());
-
-                double montoCuota = calcularCuotas(plan.getCantCuotas(),plan.getPorcMensual(),importe);
-                llenarTabla(plan,montoCuota,importe);
+                double montoCuota = calcularMontoCuotas(plan.getCantCuotas(),plan.getPorcMensual(),importe);
+                
+                llenarVista(plan,montoCuota,importe);
             }
         
+        }
+        
+        if(e.getActionCommand()==vistaSolicitarCredito.btnAceptar.getActionCommand()){
+            Plan plan = financiera.getPlanes().get(vistaSolicitarCredito.comboxPlan.getSelectedIndex());
+            int numeroCredito = cliente.getCreditos().size();
+            Estado estado = financiera.getEstados().get(0); //ESTADO ACTIVO, falta confirmacion con el servicio externo
+            Credito credito = new Credito(Double.parseDouble(vistaSolicitarCredito.campoImporte.getText()), plan, Integer.toString(numeroCredito+1), financiera, cliente, estado);
+            cliente.agregarCredito(credito);
+            System.out.println(credito.getCuotas().get(1));
         }
     }
     
@@ -72,32 +94,34 @@ public class CCredito implements ActionListener {
     
     public void cargarAlicuota(int indice){
         if(indice>=0){
-            vistaSolicitarCredito.campoAlicuota.setText(Double.toString(financiera.getPlanes().get(indice).getPorcMensual()));
+            vistaSolicitarCredito.campoAlicuota.setText(Double.toString(financiera.getPlanes().get(indice).getPorcMensual())+"%");
         }
     }
     
-    public double calcularCuotas(int numCuotas, double alicuota,double importe){
-        double montoCuota = (1+(alicuota*(double)numCuotas/100))*importe/numCuotas;
+    public double calcularMontoCuotas(int numCuotas, double alicuota,double importe){
+        double montoCuota = (1+(alicuota*numCuotas/100))*importe/numCuotas;
         return montoCuota;
     }
     
-    public void llenarTabla(Plan plan, double montoCuotas, double importe){
+    public void llenarVista(Plan plan, double montoCuotas, double importe){
+        
         DefaultTableModel model = new DefaultTableModel();
         
         model.addColumn("Numero de Cuota");
         model.addColumn("Importe");
         model.addColumn("Vencimiento");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("10/MM/yyyy");  
-        LocalDateTime now = LocalDateTime.now();
-        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+        LocalDateTime now = LocalDateTime.now().withDayOfMonth(10);
         
         for(int i=0; i<plan.getCantCuotas(); i++){
             model.addRow(new Object[]{i+1,montoCuotas,dtf.format(now.plusMonths(i+1))});
         }
         
         vistaSolicitarCredito.tableCuotas.setModel(model);
-        vistaSolicitarCredito.campoInteres.setText(Double.toString(plan.getPorcMensual()*(double)plan.getCantCuotas())+"%");
-        vistaSolicitarCredito.campoTotal.setText(Double.toString(montoCuotas*(double)plan.getCantCuotas()));
+        double interesPorc = plan.getCantCuotas()*plan.getPorcMensual();
+        vistaSolicitarCredito.campoInteres.setText(Double.toString(interesPorc)+"%");
+        double totalAPagar = importe*(1+(interesPorc/100));
+        vistaSolicitarCredito.campoTotal.setText(Double.toString(totalAPagar));
         if(plan.isCuotaAdelantada()==true){
             vistaSolicitarCredito.campoEntregar.setText(Double.toString(importe-montoCuotas));
         }
@@ -106,14 +130,5 @@ public class CCredito implements ActionListener {
         }
         vistaSolicitarCredito.campoAdministrativo.setText(Double.toString(plan.getPorcAdministrativo())+"%");
     }
-    
-    
-    /*public void solicitarCredito(int monto, int codPlan){
-        Plan plan = financiera.buscarPlan(codPlan);
-        Credito credito = new Credito(monto, plan);
-        
-    }
-    */
-    
     
 }

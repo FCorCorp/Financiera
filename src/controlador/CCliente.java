@@ -28,6 +28,7 @@ public class CCliente implements ActionListener {
     private Financiera financiera;
     private VRegistrarCliente vistaRegistrar;
     private VSolicitarCredito vistaSolicitarCredito;
+    private CCredito controladorCredito;
     
     public CCliente(Financiera financiera, VRegistrarCliente registrar){
         this.financiera = financiera;
@@ -71,11 +72,12 @@ public class CCliente implements ActionListener {
                 
                 //buscarDatosCliente(dni, vistaSolicitarCredito);
                 cargarDatosCliente(cliente,estadoCrediticio);
-                
-                CCredito controladorCredito = new CCredito(financiera,cliente,vistaSolicitarCredito);
-                
-                
-            
+                if(controladorCredito==null){
+                    controladorCredito = new CCredito(financiera,cliente,vistaSolicitarCredito);
+                }
+                else{
+                    controladorCredito.setCliente(cliente);
+                }
             }
         
         
@@ -122,10 +124,6 @@ public class CCliente implements ActionListener {
             vistaSolicitarCredito.campoDeudas.setText("Si");
         }
     }
-    
-    public void iniciarCredito(){}
-    
-    
     
     /* FUNCION INUTIL
     public void buscarCreditosCliente(int dni){

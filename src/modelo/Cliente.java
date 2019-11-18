@@ -53,8 +53,20 @@ public class Cliente {
     
     //Relaciones
     private List<Credito> creditos = new ArrayList<Credito>();
+
+    public List<Credito> getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(List<Credito> creditos) {
+        this.creditos = creditos;
+    }
     
+    public void agregarCredito(Credito credito){
+        creditos.add(credito);
+    }
     
+    //XDXD
     public List<Cuota> cuotasImpagas(){
         List<Cuota> cuotasImpagas = new ArrayList<Cuota>();;
         for(int i=0; i<creditos.size();i++){

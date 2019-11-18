@@ -5,7 +5,8 @@
  */
 package modelo;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +17,14 @@ import java.util.List;
 public class Cuota {
     
     private int numero;
-    private DateFormat fechaVenc;
+    private LocalDate fechaVenc;
     private double monto;
     private double saldo;
 
     public Cuota() {
     }
 
-    public Cuota(int numero, DateFormat fechaVenc, double monto, double saldo) {
+    public Cuota(int numero, LocalDate fechaVenc, double monto, double saldo) {
         this.numero = numero;
         this.fechaVenc = fechaVenc;
         this.monto = monto;
@@ -38,11 +39,11 @@ public class Cuota {
         this.numero = numero;
     }
 
-    public DateFormat getFechaVenc() {
+    public LocalDate getFechaVenc() {
         return fechaVenc;
     }
 
-    public void setFechaVenc(DateFormat fechaVenc) {
+    public void setFechaVenc(LocalDate fechaVenc) {
         this.fechaVenc = fechaVenc;
     }
 
@@ -69,12 +70,32 @@ public class Cuota {
     
     //XDXD
     
-    public Cuota(double montoCuota){
+    public Cuota(double montoCuota,int numero, LocalDate fecha, Credito credito){
         this.monto=montoCuota;
         this.saldo=montoCuota;
+        this.numero=numero;
+        this.fechaVenc=fecha;
+        this.credito=credito;
     }
     
     public void actualizarSaldo(double saldoNuevo){
         saldo = saldoNuevo;
     }
+
+    @Override
+    public String toString() {
+        return "Cuota{" + "numero=" + numero + ", fechaVenc=" + fechaVenc + ", monto=" + monto + ", saldo=" + saldo + ", credito=" + credito + ", lineasPagos=" + lineasPagos + '}';
+    }
+
+    
+    
+    
+
+
+    
+    
+    
+    
+    
+    
 }

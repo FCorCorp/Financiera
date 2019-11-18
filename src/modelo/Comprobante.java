@@ -6,6 +6,7 @@
 package modelo;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
 
 /**
  *
@@ -13,22 +14,22 @@ import java.text.DateFormat;
  */
 public class Comprobante {
     
-    private DateFormat fecha;
+    private LocalDate fecha;
     private String descripcion;
 
     public Comprobante() {
     }
 
-    public Comprobante(DateFormat fecha, String descripcion) {
+    public Comprobante(LocalDate fecha, String descripcion) {
         this.fecha = fecha;
         this.descripcion = descripcion;
     }
 
-    public DateFormat getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(DateFormat fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

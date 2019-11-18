@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +17,8 @@ import java.util.List;
 public class Credito {
     
     private String identificadorCredito;
-    private DateFormat fechaCreacion;
-    private DateFormat fechaFinalizacion;
+    private LocalDate fechaCreacion;
+    private LocalDate fechaFinalizacion;
     private double montoSolicitado;
     private double interes;
     private double montoEntregado;
@@ -26,7 +26,7 @@ public class Credito {
     public Credito() {
     }
     
-    public Credito(String identificadorCredito, DateFormat fechaCreacion, DateFormat fechaFinalizacion, double montoSolicitado, double interes, double montoEntregado) {
+    public Credito(String identificadorCredito, LocalDate fechaCreacion, LocalDate fechaFinalizacion, double montoSolicitado, double interes, double montoEntregado) {
         this.identificadorCredito = identificadorCredito;
         this.fechaCreacion = fechaCreacion;
         this.fechaFinalizacion = fechaFinalizacion;
@@ -43,19 +43,19 @@ public class Credito {
         this.identificadorCredito = identificadorCredito;
     }
 
-    public DateFormat getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(DateFormat fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public DateFormat getFechaFinalizacion() {
+    public LocalDate getFechaFinalizacion() {
         return fechaFinalizacion;
     }
 
-    public void setFechaFinalizacion(DateFormat fechaFinalizacion) {
+    public void setFechaFinalizacion(LocalDate fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
     }
 
@@ -91,25 +91,45 @@ public class Credito {
     private List<Cuota> cuotas = new ArrayList<Cuota>();
     private Cliente cliente;
     private Plan plan;
+
+    public List<Cuota> getCuotas() {
+        return cuotas;
+    }
+
+    public void setCuotas(List<Cuota> cuotas) {
+        this.cuotas = cuotas;
+    }
+    
+    
+    
+    
     
     //metodos
-    public void crearCuotas(int numCuota, double monto){}
-    
     
     //XDXD
-    
-    public Credito(double monto, Plan plan){
+    public Credito(double monto, Plan plan, String identificadorCredito, Financiera financiera, Cliente cliente, Estado estado){
+        this.identificadorCredito = identificadorCredito;
         this.montoSolicitado=monto;
         this.plan = plan;
         this.interes=plan.calcularInteres(monto);
+        this.fechaCreacion=LocalDate.now();
+        this.financiera=financiera;
+        this.cliente=cliente;
+        this.estado=estado;
         
         //2.3
         double montoCuota = calcularMontoCuota(this.montoSolicitado,plan.getCantCuotas(),this.interes);
+        
+        //creacion de cuotas
+        
         //2.4 - 2.5 - 2.6
+        LocalDate fecha = LocalDate.now().withDayOfMonth(10);
         for(int i=0;i<plan.getCantCuotas();i++){
-            Cuota cuota = new Cuota(montoCuota);
+            fecha.plusMonths(i);
+            Cuota cuota = new Cuota(montoCuota, i+1, fecha, this);
             cuotas.add(cuota);
         }
+        
         //2.7 - 2.7.1
         boolean cA = plan.isCuotaAdelantada();
         
@@ -119,9 +139,10 @@ public class Credito {
         }
         else{
             double porAdm=financiera.getPorcAdministrativo();
-            
-            
+            calcularMontoEntregadoCV(porAdm, interes);
         }
+        
+        
     }
     
     public double calcularMontoCuota(double monto, int cantidadCuota, double interes){
@@ -129,9 +150,9 @@ public class Credito {
     }
     
     public void calcularMontoEntregadoCA(double valorCuota){
-        montoEntregado = montoSolicitado+interes-valorCuota;
+        montoEntregado = montoSolicitado-valorCuota;
     }
-    public void calcularMontoEntregadoCV(double porAdm){
+    public void calcularMontoEntregadoCV(double porAdm, double interes){
         montoEntregado = montoSolicitado - montoSolicitado*(porAdm/100);
     }
     
@@ -167,8 +188,14 @@ public class Credito {
             adaptador.finalizarCredito(financiera.getCuit(), cliente.getDni(), identificadorCredito);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Credito{" + "identificadorCredito=" + identificadorCredito + ", fechaCreacion=" + fechaCreacion + ", fechaFinalizacion=" + fechaFinalizacion + ", montoSolicitado=" + montoSolicitado + ", interes=" + interes + ", montoEntregado=" + montoEntregado + '}';
+    }
     
     
+
     
     
 }
