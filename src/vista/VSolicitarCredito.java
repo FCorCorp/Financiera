@@ -70,6 +70,11 @@ public class VSolicitarCredito extends javax.swing.JFrame {
         btnAceptar.setText("Aceptar");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         campoDni.setText("33000003");
         campoDni.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +165,11 @@ public class VSolicitarCredito extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tableCuotas);
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnCalcular.setText("Calcular");
 
@@ -302,6 +312,14 @@ public class VSolicitarCredito extends javax.swing.JFrame {
     private void campoDeudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDeudasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoDeudasActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+          this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

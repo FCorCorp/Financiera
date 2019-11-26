@@ -72,7 +72,7 @@ public class CCredito implements ActionListener {
             }
         
         }
-        
+        //Crear el crédito con los datos necesarios
         if(e.getActionCommand()==vistaSolicitarCredito.btnAceptar.getActionCommand()){
             Plan plan = financiera.getPlanes().get(vistaSolicitarCredito.comboxPlan.getSelectedIndex());
             int numeroCredito = cliente.getCreditos().size();

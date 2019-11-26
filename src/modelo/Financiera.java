@@ -119,7 +119,7 @@ public class Financiera {
     }
 
     public void setEstados(List<Estado> estados) {
-        this.estados = estados;
+       this.estados = estados;
     }
     
     public void agregarEstado(Estado estado){
@@ -174,6 +174,7 @@ public class Financiera {
         planes.add(plan);
     }
     
+    //MÉTODOS
     
     public Plan buscarPlan(int idPlan){
         Plan planEncontrado = new Plan();

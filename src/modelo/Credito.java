@@ -26,14 +26,14 @@ public class Credito {
     public Credito() {
     }
     
-    public Credito(String identificadorCredito, LocalDate fechaCreacion, LocalDate fechaFinalizacion, double montoSolicitado, double interes, double montoEntregado) {
+ /*   public Credito(String identificadorCredito, LocalDate fechaCreacion, LocalDate fechaFinalizacion, double montoSolicitado, double interes, double montoEntregado) {
         this.identificadorCredito = identificadorCredito;
         this.fechaCreacion = fechaCreacion;
         this.fechaFinalizacion = fechaFinalizacion;
         this.montoSolicitado = montoSolicitado;
         this.interes = interes;
         this.montoEntregado = montoEntregado;
-    }
+    }*/
 
     public String getIdentificadorCredito() {
         return identificadorCredito;
@@ -149,11 +149,11 @@ public class Credito {
         return (monto+interes)/cantidadCuota;
     }
     
-    public void calcularMontoEntregadoCA(double valorCuota){
-        montoEntregado = montoSolicitado-valorCuota;
+    public double calcularMontoEntregadoCA(double valorCuota){
+       return montoEntregado = montoSolicitado-valorCuota;
     }
-    public void calcularMontoEntregadoCV(double porAdm, double interes){
-        montoEntregado = montoSolicitado - montoSolicitado*(porAdm/100);
+    public double calcularMontoEntregadoCV(double porAdm, double interes){
+       return montoEntregado = montoSolicitado - montoSolicitado*(porAdm/100);
     }
     
     public List<Cuota> obtenerImpagas(){

@@ -29,6 +29,7 @@ public class Adaptador {
         return "Credito INFORMADO";
     }
     public String finalizarCredito(int codigoFinanciera, int dni, String identificadorCredito){
+        
         return "Credito FINALIZADO";
     }
     

@@ -108,11 +108,11 @@ public class Principal {
         finalizado.setNombre("finalizado");
         finalizado.setDescripcion("El credito esta finalizado y validado en el sistema online");
         
-        financiera.agregarEstado(activo);
-        financiera.agregarEstado(pendiente);
-        financiera.agregarEstado(moroso);
-        financiera.agregarEstado(pendienteFinalizacion);
-        financiera.agregarEstado(finalizado);
+        //financiera.agregarEstado(activo);
+        //financiera.agregarEstado(pendiente);
+        //financiera.agregarEstado(moroso);
+        //financiera.agregarEstado(pendienteFinalizacion);
+        //financiera.agregarEstado(finalizado);
         
         VAcciones vista = new VAcciones();
         CPrincipal principal = new CPrincipal(vista, financiera);

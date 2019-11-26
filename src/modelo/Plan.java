@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -87,11 +87,11 @@ public class Plan {
     
     //XDXD
     
-    double obtenerInteres(double monto){
+   public double obtenerInteres(double monto){
         return calcularInteres(monto);
     }
     
-    double calcularInteres(double monto){
+   public double calcularInteres(double monto){
         return monto*(this.porcMensual*this.cantCuotas)/100;
     }
     
